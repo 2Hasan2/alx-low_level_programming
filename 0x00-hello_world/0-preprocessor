@@ -1,0 +1,22 @@
+#!/bin/bash
+
+if [ -z "$CFILE" ]; then
+    echo "Error: CFILE environment variable is not set."
+    exit 1
+fi
+
+if [ ! -f "$CFILE" ]; then
+    echo "Error: $CFILE does not exist."
+    exit 1
+fi
+
+OUTPUT_FILE="c"
+
+cpp "$CFILE" >"$OUTPUT_FILE"
+
+if [ $? -eq 0 ]; then
+    echo "Preprocessing completed. Output saved to $OUTPUT_FILE"
+else
+    echo "Error: Preprocessing failed."
+    exit 1
+fi
