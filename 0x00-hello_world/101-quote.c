@@ -1,19 +1,10 @@
 #include <unistd.h>
-#include <string.h>
-#include <stdlib.h>
-
 /**
- * main - A c program that prints a line to the standerd error
- * Return: 1 (success)
+ * main - prints "Programming is like building a multilingual puzzle
+ * Return: num 1
  */
-int main(void) {
-    const char *message = "and that piece of art is useful\" - Dora Korpar, 2015-10-19\n";
-    ssize_t len = strlen(message);
-    ssize_t bytes_written = write(2, message, len);
-
-    if (bytes_written == len) {
-        return 1;
-    } else {
-        return 0;
-    }\
+int main(void)
+{
+	write(2, "and that piece of art is useful\" - Dora Korpar, 2015-10-19\n", 59);
+	return (1);
 }
