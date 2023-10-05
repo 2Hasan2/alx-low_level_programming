@@ -15,5 +15,5 @@ int main(void) {
         return 1;
     } else {
         return 0;
-    }
+    }\
 }
