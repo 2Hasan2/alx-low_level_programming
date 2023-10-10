@@ -9,19 +9,20 @@
  */
 int main(void)
 {
-long int a = 1, b = 2, next, i;
+    long int a = 1, b = 2, next, i;
 
-printf("%ld, %ld", a, b);
+    printf("%ld, %ld", a, b);
 
-for (i = 2; i < 50; i++)
-{
+    for (i = 2; i < 50; i++)
+    {
         next = a + b;
         printf(", %ld", next);
         a = b;
         b = next;
-}
-printf("\n");
+    }
 
-return (0);
+    printf("\n");
+
+    return (0);
 }
 
