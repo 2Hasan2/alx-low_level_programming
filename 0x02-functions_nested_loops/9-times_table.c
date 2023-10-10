@@ -15,12 +15,12 @@ void times_table(void)
             product = row * column;
 
             if (column == 0)
-                printf( product);
+                printf("0");
             else
                 printf("%2d", product);
 
             if (column < 9)
-                printf(",");
+                printf(", ");
         }
         printf("\n");
     }
