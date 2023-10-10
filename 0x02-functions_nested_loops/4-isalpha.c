@@ -17,3 +17,4 @@ int _isalpha(int num)
 		return (0);
 	}
 }
+

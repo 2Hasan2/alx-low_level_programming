@@ -17,3 +17,4 @@ int _islower(int num)
 		return (0);
 	}
 }
+
