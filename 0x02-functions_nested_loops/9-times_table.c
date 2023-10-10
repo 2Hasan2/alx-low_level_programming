@@ -20,7 +20,7 @@ void times_table(void)
                 printf("%3d", product);
 
             if (column < 9)
-                printf(", ");
+                printf(",");
         }
         printf("\n");
     }
