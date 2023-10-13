@@ -1,3 +1,13 @@
+/*
+ * File: 0-isupper.c
+ * Author: Your Name
+ * Description: File description here
+ */
+/*
+ * File: 0-isupper.c
+ * Author: Your Name
+ * Description: File description here
+ */
 #include "main.h"
 #include <stdio.h>
 
@@ -13,3 +23,4 @@ int _isupper(int c){
     else
         return (0);
 }
+
