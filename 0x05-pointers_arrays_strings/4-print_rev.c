@@ -14,4 +14,5 @@ while (i < len)
 _putchar(s[len - i - 1]);
 i++;
 }
+_putchar('\n');
 }
