@@ -1,8 +1,8 @@
 #include "main.h"
 /**
  * swap_int - swap value of two integers
- * @a - parameter
- * @b - parameter
+ * @a : parameter
+ * @b : parameter
  * Return : nothing
  */
 
