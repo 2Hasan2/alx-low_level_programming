@@ -1,55 +1,71 @@
 #include "main.h"
 /**
- * infinite_add - adds two numbers
- * @n1: first number
- * @n2: second number
- * @r: buffer to store result
- * @size_r: size of buffer
- * Return: pointer to the result
- */
-
-char *infinite_add(char *n1, char *n2, char *r, int size_r)
+* rev_string - reverse array
+* @n: integer params
+* Return: 0
+*/
+void rev_string(char *n)
 {
-int i, j, k, l, m, n, sum, carry;
-i = 0;
-while (n1[i])
+int i = 0;
+int j = 0;
+char temp;
+while (*(n + i) != '\0')
 {
 i++;
 }
-j = 0;
-while (n2[j])
+i--;
+for (j = 0; j < i; j++, i--)
 {
+temp = *(n + j);
+*(n + j) = *(n + i);
+*(n + i) = temp;
+}
+}
+/**
+* infinite_add - add 2 numbers together
+* @n1: text representation of 1st number to add
+* @n2: text representation of 2nd number to add
+* @r: pointer to buffer
+* @size_r: buffer size
+* Return: pointer to calling function
+*/
+char *infinite_add(char *n1, char *n2, char *r, int size_r)
+{
+int overflow = 0, i = 0, j = 0, digits = 0;
+int val1 = 0, val2 = 0, temp_tot = 0;
+while (*(n1 + i) != '\0')
+i++;
+while (*(n2 + j) != '\0')
 j++;
-}
-if (i + 2 > size_r || j + 2 > size_r)
-{
+i--;
+j--;
+if (j >= size_r || i >= size_r)
 return (0);
-}
-carry = 0;
-for (k = i - 1, l = j - 1, m = 0; k >= 0 || l >= 0; k--, l--, m++)
+while (j >= 0 || i >= 0 || overflow == 1)
 {
-sum = carry;
-if (k >= 0)
-{
-sum += n1[k] - '0';
+if (i < 0)
+val1 = 0;
+else
+val1 = *(n1 + i) - '0';
+if (j < 0)
+val2 = 0;
+else
+val2 = *(n2 + j) - '0';
+temp_tot = val1 + val2 + overflow;
+if (temp_tot >= 10)
+overflow = 1;
+else
+overflow = 0;
+if (digits >= (size_r - 1))
+return (0);
+*(r + digits) = (temp_tot % 10) + '0';
+digits++;
+j--;
+i--;
 }
-if (l >= 0)
-{
-sum += n2[l] - '0';
-}
-carry = sum / 10;
-r[m] = sum % 10 + '0';
-}
-if (carry > 0)
-{
-r[m++] = carry + '0';
-}
-r[m] = '\0';
-for (k = 0, n = m - 1; k < n; k++, n--)
-{
-sum = r[k];
-r[k] = r[n];
-r[n] = sum;
-}
+if (digits == size_r)
+return (0);
+*(r + digits) = '\0';
+rev_string(r);
 return (r);
 }
