@@ -1,71 +1,101 @@
 #include "main.h"
 /**
-* rev_string - reverse array
-* @n: integer params
-* Return: 0
-*/
-void rev_string(char *n)
+ * adding - Calculation methoud
+ * @i: incremental
+ * @temp: temproray
+ * @n1: pointer for the first 1
+ * @n2: pointer for the first 2
+ * @n1Len: length of n1
+ * @n2Len: length of n2
+ * @size_r: size of buffer
+ * @r: pointer for the buffer
+ * Return: the buffer pointer
+ */
+char *adding(int i, int temp, char *n1, char *n2,
+			 int n1Len, int n2Len, int size_r, char *r)
 {
-int i = 0;
-int j = 0;
-char temp;
-while (*(n + i) != '\0')
-{
-i++;
+	for (i = i - 1; i >= 0 || temp != 0; i--)
+	{
+
+		if (n1Len >= 0)
+		{
+
+			temp += (n1[n1Len] - '0');
+			n1Len--;
+		}
+		if (n2Len >= 0)
+		{
+
+			temp += (n2[n2Len] - '0');
+			n2Len--;
+		}
+
+		r[i] = temp % 10 + '0';
+
+		temp /= 10;
+		if (i == 0 && temp)
+		{
+			int j = 0;
+
+			while (r[j] != '\0')
+				j++;
+			if (j + 2 > size_r)
+				return (0);
+			while (j >= 0)
+			{
+				r[j + 1] = r[j];
+				j--;
+			}
+			i++;
+		}
+	}
+	return (r);
 }
-i--;
-for (j = 0; j < i; j++, i--)
-{
-temp = *(n + j);
-*(n + j) = *(n + i);
-*(n + i) = temp;
-}
-}
+
 /**
-* infinite_add - add 2 numbers together
-* @n1: text representation of 1st number to add
-* @n2: text representation of 2nd number to add
-* @r: pointer to buffer
-* @size_r: buffer size
-* Return: pointer to calling function
-*/
+ * infinite_add - Calculates the sum of two numbers
+ * @n1: pointer for the first number
+ * @n2: pointer for the second number
+ * @r: pointer for the bufer
+ * @size_r: size of the bufer
+ * Return: the string pinter
+ * Ashraf Atef
+ */
+
 char *infinite_add(char *n1, char *n2, char *r, int size_r)
 {
-int overflow = 0, i = 0, j = 0, digits = 0;
-int val1 = 0, val2 = 0, temp_tot = 0;
-while (*(n1 + i) != '\0')
-i++;
-while (*(n2 + j) != '\0')
-j++;
-i--;
-j--;
-if (j >= size_r || i >= size_r)
-return (0);
-while (j >= 0 || i >= 0 || overflow == 1)
-{
-if (i < 0)
-val1 = 0;
-else
-val1 = *(n1 + i) - '0';
-if (j < 0)
-val2 = 0;
-else
-val2 = *(n2 + j) - '0';
-temp_tot = val1 + val2 + overflow;
-if (temp_tot >= 10)
-overflow = 1;
-else
-overflow = 0;
-if (digits >= (size_r - 1))
-return (0);
-*(r + digits) = (temp_tot % 10) + '0';
-digits++;
-j--;
-i--;
-}
-if (digits == size_r)
-return (0);
-*(r + digits) = '\0';
-rev_string(r);
-return (r);
+	int n1Len = 0;
+	int n2Len = 0;
+	int temp = 0;
+	int i = 0;
+
+	while ((n1[n1Len] >= '0' && n1[n1Len] <= '9') ||
+		   (n2[n2Len] >= '0' && n2[n2Len] <= '9'))
+	{
+		if (n1[n1Len] >= '0' && n1[n1Len] <= '9')
+			n1Len++;
+		if (n2[n2Len] >= '0' && n2[n2Len] <= '9')
+			n2Len++;
+	}
+
+	if (n1Len > size_r - 1 || n2Len > size_r - 1)
+	{
+		return (0);
+	}
+	if (n1Len > n2Len)
+	{
+		i = n1Len;
+	}
+	else
+	{
+		i = n1Len;
+	}
+	if (n1Len)
+		n1Len--;
+	if (n2Len)
+		n2Len--;
+
+	r[i] = '\0';
+
+	return (adding(i, temp, n1, n2, n1Len, n2Len, size_r, r));
 }
