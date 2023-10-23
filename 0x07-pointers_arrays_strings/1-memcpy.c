@@ -2,10 +2,10 @@
 /**
  * _memcpy - copy bytes from memory area
  * to another one
- * @src : copy from it 
+ * @src : copy from it
  * @dest : paste in it
  * @n : number of bytes
- */ 
+ */
 
 char *_memcpy(char *dest, char *src, unsigned int n)
 {
