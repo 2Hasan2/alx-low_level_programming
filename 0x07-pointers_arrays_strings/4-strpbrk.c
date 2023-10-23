@@ -2,8 +2,8 @@
 /**
  * _strpbrk - function locates the first occurrence in
  * the string s of any of the bytes in the string accept
- * @s:
- * @accept:
+ * @s: the string
+ * @accept: the accept characters
  * Return: pointer to the byte in s
  * that matches one of the bytes in accept
  * or NULL
