@@ -5,13 +5,24 @@
  * @size: size of matrix
  * Return: void
  */
-void print_diagsums(int *a, int size) {
-int sum_primary = 0;
-int sum_secondary = 0;
-for (int i = 0; i < size; i++) {
-sum_primary += a[i * size + i];
-sum_secondary += a[i * size + (size - 1 - i)];
+
+void print_diagsums(int *a, int size)
+{
+int i, sum1 = 0, sum2 = 0;
+for (i = 0; i < size; i++)
+{
+sum1 += a[i];
+a += size;
 }
-putchar(sum_primary);
-putchar(sum_secondary);
+a -= size;
+for (i = 0; i < size; i++)
+{
+sum2 += a[i];
+a -= size;
+}
+putchar(sum1 + '0');
+putchar(',');
+putchar(' ');
+putchar(sum2 + '0');
+putchar('\n');
 }
