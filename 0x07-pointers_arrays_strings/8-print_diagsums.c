@@ -20,9 +20,5 @@ for (i = 0; i < size; i++)
 sum2 += a[i];
 a -= size;
 }
-putchar(sum1 + '0');
-putchar(',');
-putchar(' ');
-putchar(sum2 + '0');
-putchar('\n');
+printf("%d, %d\n", sum1, sum2);
 }
