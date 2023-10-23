@@ -21,7 +21,6 @@ int main(void) {
         {'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'},
         {'R', 'K', 'B', 'Q', 'K', 'B', 'K', 'R'},
     };
-
-
+    print_chessboard(board);
     return 0;
 }
