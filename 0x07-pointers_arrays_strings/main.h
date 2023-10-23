@@ -5,6 +5,7 @@
 #include <stdlib.h>
 
 int _putchar(char character);
+char *_memset(char *s, char b, unsigned int n);
 
 
 
