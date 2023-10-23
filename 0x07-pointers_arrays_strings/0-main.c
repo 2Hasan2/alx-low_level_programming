@@ -1,16 +1,27 @@
 #include "main.h"
+
 /**
  * main - check the code
  *
  * Return: Always 0.
  */
-int main(void)
-{
-    char *s = "hello, world";
-    char *f = "world";
-    char *t;
 
-    t = _strstr(s, f);
-    printf("%s\n", t);
-    return (0);
+
+
+#include <stdio.h>
+
+int main(void) {
+    char board[8][8] = {
+        {'r', 'k', 'b', 'q', 'k', 'b', 'k', 'r'},
+        {'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'},
+        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+        {'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'},
+        {'R', 'K', 'B', 'Q', 'K', 'B', 'K', 'R'},
+    };
+
+
+    return 0;
 }
