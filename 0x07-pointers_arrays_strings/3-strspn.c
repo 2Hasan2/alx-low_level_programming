@@ -23,4 +23,5 @@ break;
 }
 s++;
 }
+return (bytes);
 }
