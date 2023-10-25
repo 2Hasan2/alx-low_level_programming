@@ -12,7 +12,6 @@ else if (n * n == x)
 return (n);
 return (sqrtME(n + 1, x));
 }
-
 int _sqrt_recursion(int n)
 {
 if (n == 0 || n == 1)
