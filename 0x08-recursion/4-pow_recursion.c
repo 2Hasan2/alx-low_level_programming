@@ -12,8 +12,5 @@ if(y == 0)
 return (1);
 else if(y < 0)
 return(-1);
-else if(y  > 0){
-int res = _pow_recursion(x , y - 1);
-return (x * res);
-}
+return (_pow_recursion(x , y - 1) * x);
 }
