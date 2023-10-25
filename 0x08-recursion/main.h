@@ -15,5 +15,6 @@ int sqrtME(int n, int x);
 int is_prime_number(int n);
 int primeME(int x, int n);
 int is_palindrome(char *s);
+int palindromeME(char *s, int i, int j);
 
 #endif /*MAIN_H*/
