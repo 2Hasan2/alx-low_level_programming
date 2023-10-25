@@ -16,16 +16,13 @@ return (palindromeME(s, i + 1, j - 1));
 }
 /**
  * is_palindrome - checks if a string is a palindrome
+ * loop not allowed
  * @s: string to check
  * Return: 1 if @s is a palindrome, 0 otherwise
  */
 int is_palindrome(char *s)
 {
-int len = 0;
 int i = 0;
-int j = 0;
-while (s[i++])
-len++;
-j = len - 1;
+int j = strlen(s) - 1;
 return (palindromeME(s, i, j));
 }
