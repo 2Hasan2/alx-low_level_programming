@@ -2,10 +2,9 @@
 #define MAIN_H
 #include <stdio.h>
 #include <unistd.h>
-#include "_putchar.c"
 
+int _putchar(char c);
 void _puts_recursion(char *s);
 int factorial(int n);
-
 
 #endif /*MAIN_H*/
