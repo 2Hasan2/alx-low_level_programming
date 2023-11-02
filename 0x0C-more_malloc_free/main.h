@@ -1,20 +1,20 @@
 #ifndef MAIN_H
 #define MAIN_H
+
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
-#include <stddef.h>
 
-int _putchar(char character);
-char *_memset(char *s, char b, unsigned int n);
-char *_memcpy(char *dest, char *src, unsigned int n);
-char *_strchr(char *s, char c);
-unsigned int _strspn(char *s, char *accept);
-char *_strpbrk(char *s, char *accept);
-char *_strstr(char *haystack, char *needle);
-void print_chessboard(char (*a)[8]);
-void print_diagsums(int *a, int size);
-void set_string(char **s, char *to);
-
+int _putchar(char c);
+void *malloc_checked(unsigned int b);
+char *string_nconcat(char *s1, char *s2, unsigned int n);
+int len(char *str);
+void *_calloc(unsigned int nmemb, unsigned int size);
+int *array_range(int min, int max);
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
+int find_len(char *str);
+char *create_xarray(int size);
+char *iterate_zeroes(char *str);
+void get_prod(char *prod, char *mult, int digit, int zeroes);
+void add_nums(char *final_prod, char *next_prod, int next_len);
 
 #endif /*MAIN_H*/
