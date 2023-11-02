@@ -14,13 +14,3 @@ void *malloc_checked(unsigned int b)
         exit(98);
     return (p);
 }
-
-// test function
-int main(){
-    char *p;
-
-    p = malloc_checked(1024);
-    printf("%p\n", (void *)p);
-    free(p);
-    return (0);
-}
