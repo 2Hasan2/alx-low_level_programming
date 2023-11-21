@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/Hassan Mohamed/OneDrive/Desktop/alx-low_level_programming",
-      "program": "c:/Users/Hassan Mohamed/OneDrive/Desktop/alx-low_level_programming/build/Debug/outDebug",
+      "cwd": ".",
+      "program": "build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
