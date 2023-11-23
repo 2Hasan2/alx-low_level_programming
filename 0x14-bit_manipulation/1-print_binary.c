@@ -8,25 +8,25 @@
 
 void print_binary(unsigned long int n)
 {
-    int i, flag = 0;
-    unsigned long int k;
+	int i, flag = 0;
+	unsigned long int k;
 
-    if (n == 0)
-    {
-        _putchar('0');
-        return;
-    }
+	if (n == 0)
+	{
+		_putchar('0');
+		return;
+	}
 
-    for (i = 63; i >= 0; i--)
-    {
-        k = n >> i;
+	for (i = 63; i >= 0; i--)
+	{
+		k = n >> i;
 
-        if (k & 1)
-        {
-            _putchar('1');
-            flag = 1;
-        }
-        else if (flag == 1)
-            _putchar('0');
-    }
+		if (k & 1)
+		{
+			_putchar('1');
+			flag = 1;
+		}
+		else if (flag == 1)
+			_putchar('0');
+	}
 }
