@@ -1,71 +1,83 @@
 #include "main.h"
-#include <stdio.h>
 
+int comp_close(int);
 /**
- * error_file - prints error messages.
- * @file_from: file descriptor of the file to copy from.
- * @file_to: file descriptor of the file to copy to.
- * @argv: arguments vector.
+ * main - Main function to copy files
+ * @argc: The number of passed arguments
+ * @argv: The pointers to array arguments
+ * Return: 1 on success, exits on failure
  */
-void error_file(int file_from, int file_to, char *argv[])
+int main(int argc, char *argv[])
 {
-	if (file_from == -1)
+	char buffer[1024];
+	int bytes_read = 0, _EOF = 1, from_fd = -1, to_fd = -1, error = 0;
+
+	if (argc != 3)
+	{
+		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
+		exit(97);
+	}
+
+	from_fd = open(argv[1], O_RDONLY);
+	if (from_fd < 0)
 	{
 		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
 		exit(98);
 	}
-	if (file_to == -1)
+
+	to_fd = open(argv[2], O_WRONLY | O_TRUNC | O_CREAT, 0664);
+	if (to_fd < 0)
 	{
 		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
+		comp_close(from_fd);
 		exit(99);
 	}
+
+	while (_EOF)
+	{
+		_EOF = read(from_fd, buffer, 1024);
+		if (_EOF < 0)
+		{
+			dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
+			comp_close(from_fd);
+			comp_close(to_fd);
+			exit(98);
+		}
+		else if (_EOF == 0)
+			break;
+		bytes_read += _EOF;
+		error = write(to_fd, buffer, _EOF);
+		if (error < 0)
+		{
+			dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
+			comp_close(from_fd);
+			comp_close(to_fd);
+			exit(99);
+		}
+	}
+	error = comp_close(to_fd);
+	if (error < 0)
+	{
+		comp_close(from_fd);
+		exit(100);
+	}
+	error = comp_close(from_fd);
+	if (error < 0)
+		exit(100);
+	return (0);
 }
 
 /**
- * main - copies the content of a file to another file.
- * @argc: number of arguments.
- * @argv: arguments vector.
- * Return: 0 on success.
+ * comp_close - A function that closes a file and prints error when closed file
+ * @description: Description error for closed file
+ * Return: 1 on success, -1 on failure
  */
-int main(int argc, char *argv[])
+int comp_close(int description)
 {
-	int file_from, file_to, err_close;
-	ssize_t nchars, nwr;
-	char buf[1024];
+	int error;
 
-	if (argc != 3)
-	{
-		dprintf(STDERR_FILENO, "%s\n", "Usage: cp file_from file_to");
-		exit(97);
-	}
-
-	file_from = open(argv[1], O_RDONLY);
-	file_to = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC | O_APPEND, 0664);
-	error_file(file_from, file_to, argv);
-
-	nchars = 1024;
-	while (nchars == 1024)
-	{
-		nchars = read(file_from, buf, 1024);
-		if (nchars == -1)
-			error_file(-1, 0, argv);
-		nwr = write(file_to, buf, nchars);
-		if (nwr == -1)
-			error_file(0, -1, argv);
-	}
-
-	err_close = close(file_from);
-	if (err_close == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", file_from);
-		exit(100);
-	}
-
-	err_close = close(file_to);
-	if (err_close == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", file_from);
-		exit(100);
-	}
-	return (0);
+	error = close(description);
+	if (error < 0)
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", description);
+	return (error);
 }
