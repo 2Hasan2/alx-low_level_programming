@@ -2,125 +2,138 @@
 #include <stdlib.h>
 #include <time.h>
 
-/**
- * f4 - generates random valid passwords for the
- *      program 103-keygen.c
- * @usrn: user's login
- * @len: length of the login
- * Return: pointer to the generated password
- */
-int f4(char *usrn, int len)
-{
-	int ch;
-	int vch;
+int findLargestChar(char *username, int length);
+int multiplyChars(char *username, int length);
+int generateRandomChar(char *username);
 
-	ch = *usrn;
-	vch = 0;
-	while (vch < len)
+/**
+ * findLargestChar - Finds the largest character in the username.
+ *
+ * @username: User's username
+ * @length: Length of the username
+ * Return: The largest character
+ */
+int findLargestChar(char *username, int length)
+{
+	int currentChar;
+	int largestChar;
+	unsigned int randNum;
+
+	currentChar = *username;
+	largestChar = 0;
+
+	while (largestChar < length)
 	{
-		if (ch < usrn[vch])
-			ch = usrn[vch];
-		vch += 1;
+		if (currentChar < username[largestChar])
+			currentChar = username[largestChar];
+		largestChar += 1;
 	}
-	srand(ch ^ 14);
-	return (rand());
+
+	srand(currentChar ^ 14);
+	randNum = rand();
+
+	return (randNum & 63);
 }
 
 /**
- * f5 - generates random valid passwords for the
- *      program 103-keygen.c
- * @usrn: user's login
- * @len: length of the login
- * Return: pointer to the generated password
+ * multiplyChars - Multiplies each character in the username.
+ *
+ * @username: User's username
+ * @length: Length of the username
+ * Return: The multiplied character
  */
-int f5(char *usrn, int len)
+int multiplyChars(char *username, int length)
 {
-	int ch;
-	int vch;
+	int currentChar;
+	int result;
 
-	(void) usrn;
-	ch = 0;
-	vch = 0;
-	while (vch < len)
+	currentChar = result = 0;
+
+	while (result < length)
 	{
-		ch += usrn[vch] * usrn[vch];
-		vch += 1;
+		currentChar = currentChar + username[result] * username[result];
+		result += 1;
 	}
-	srand(ch ^ 239);
-	return (rand());
+
+	return (((unsigned int)currentChar ^ 239) & 63);
 }
 
 /**
- * f6 - generates random valid passwords for the
- *      program 103-keygen.c
- * @usrn: user's login
- * @len: length of the login
- * Return: pointer to the generated password
+ * generateRandomChar - Generates a random character.
+ *
+ * @username: User's username
+ * Return: A random character
  */
-int f6(char *usrn, int len)
+int generateRandomChar(char *username)
 {
-	int ch;
-	int vch;
+	int currentChar;
+	int result;
 
-	ch = 0;
-	vch = 0;
-	while (vch < len)
+	currentChar = result = 0;
+
+	while (result < *username)
 	{
-		ch = (ch + usrn[vch]) ^ 0x55;
-		vch += 1;
+		currentChar = rand();
+		result += 1;
 	}
-	srand(ch);
-	return (rand());
+
+	return (((unsigned int)currentChar ^ 229) & 63);
 }
 
-
 /**
- * main - Entry point, generates passwords
- * @argc: argument count
- * @argv: argument vector
+ * main - Entry point
+ *
+ * @argc: Arguments count
+ * @argv: Arguments vector
  * Return: Always 0
  */
 int main(int argc, char **argv)
 {
 	char keygen[7];
-	int login_len, ch, vch;
-	long alph[] = {
+	int length, currentChar, result;
+	long alphabet[] = {
 		0x3877445248432d41, 0x42394530534e6c37, 0x4d6e706762695432,
 		0x74767a5835737956, 0x2b554c59634a474f, 0x71786636576a6d34,
-		0x723161513346655a, 0x6b756f494b646850 };
-	(void) argc;
+		0x723161513346655a, 0x6b756f494b646850};
+	(void)argc;
 
-	for (login_len = 0; argv[1][login_len]; login_len++)
+	for (length = 0; argv[1][length]; length++)
 		;
 
-	keygen[0] = ((char *)alph)[(login_len ^ 59) & 63];
+	/* ----------- findFirstChar ----------- */
+	keygen[0] = ((char *)alphabet)[(length ^ 59) & 63];
 
-	ch = vch = 0;
-	while (vch < login_len)
+	/* ----------- findSumChars ----------- */
+	currentChar = result = 0;
+	while (result < length)
 	{
-		ch = ch + argv[1][vch];
-		vch = vch + 1;
+		currentChar = currentChar + argv[1][result];
+		result += 1;
 	}
-	keygen[1] = ((char *)alph)[(ch ^ 79) & 63];
+	keygen[1] = ((char *)alphabet)[(currentChar ^ 79) & 63];
 
-	ch = 1;
-	vch = 0;
-	while (vch < login_len)
+	/* ----------- multiplyAllChars ----------- */
+	currentChar = 1;
+	result = 0;
+	while (result < length)
 	{
-		ch = argv[1][vch] * ch;
-		vch = vch + 1;
+		currentChar = argv[1][result] * currentChar;
+		result += 1;
 	}
-	keygen[2] = ((char *)alph)[(ch ^ 85) & 63];
+	keygen[2] = ((char *)alphabet)[(currentChar ^ 85) & 63];
 
-	keygen[3] = ((char *)alph)[f4(argv[1], login_len)];
+	/* ----------- findLargestChar ----------- */
+	keygen[3] = ((char *)alphabet)[findLargestChar(argv[1], length)];
 
-	keygen[4] = ((char *)alph)[f5(argv[1], login_len)];
+	/* ----------- multiplyChars ----------- */
+	keygen[4] = ((char *)alphabet)[multiplyChars(argv[1], length)];
 
-	keygen[5] = ((char *)alph)[f6(argv[1], login_len)];
+	/* ----------- generateRandomChar ----------- */
+	keygen[5] = ((char *)alphabet)[generateRandomChar(argv[1])];
 	keygen[6] = '\0';
 
-	for (ch = 0; keygen[ch]; ch++)
-		printf("%c", keygen[ch]);
+	for (currentChar = 0; keygen[currentChar]; currentChar++)
+		printf("%c", keygen[currentChar]);
 
 	return (0);
 }
