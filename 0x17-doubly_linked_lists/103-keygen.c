@@ -100,10 +100,8 @@ int main(int argc, char **argv)
 	for (length = 0; argv[1][length]; length++)
 		;
 
-	/* ----------- findFirstChar ----------- */
 	keygen[0] = ((char *)alphabet)[(length ^ 59) & 63];
 
-	/* ----------- findSumChars ----------- */
 	currentChar = result = 0;
 	while (result < length)
 	{
@@ -112,7 +110,6 @@ int main(int argc, char **argv)
 	}
 	keygen[1] = ((char *)alphabet)[(currentChar ^ 79) & 63];
 
-	/* ----------- multiplyAllChars ----------- */
 	currentChar = 1;
 	result = 0;
 	while (result < length)
@@ -122,13 +119,10 @@ int main(int argc, char **argv)
 	}
 	keygen[2] = ((char *)alphabet)[(currentChar ^ 85) & 63];
 
-	/* ----------- findLargestChar ----------- */
 	keygen[3] = ((char *)alphabet)[findLargestChar(argv[1], length)];
 
-	/* ----------- multiplyChars ----------- */
 	keygen[4] = ((char *)alphabet)[multiplyChars(argv[1], length)];
 
-	/* ----------- generateRandomChar ----------- */
 	keygen[5] = ((char *)alphabet)[generateRandomChar(argv[1])];
 	keygen[6] = '\0';
 
