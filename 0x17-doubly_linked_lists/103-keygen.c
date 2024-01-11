@@ -84,29 +84,28 @@ int f6(char *usrn, int len)
  */
 int main(int argc, char **argv)
 {
-	char password[7];
-	int rand_num, sum, i, len;
+	char password[84];
+	int rand_num;
+	int len;
+	int i;
 
 	if (argc != 2)
 		return (-1);
 	for (len = 0; argv[1][len]; len++)
 		;
 	srand(f4(argv[1], len));
-	sum = 0;
-	i = 0;
-	while (sum < 2772 - 122)
-	{
-		rand_num = rand() % 127;
-		if (rand_num > 32)
-		{
-			password[i] = rand_num;
-			sum += password[i];
-			i++;
-		}
-	}
-	rand_num = 2772 - sum;
-	password[i] = rand_num;
-	password[i + 1] = '\0';
+	password[0] = f1(argv[1], len);
+	srand(f2(argv[1], len));
+	password[1] = f2(argv[1], len);
+	srand(f3(argv[1]));
+	password[2] = f3(argv[1]);
+	rand_num = f4(argv[1], len);
+	password[3] = rand_num & 0x3f;
+	for (i = 0, rand_num = 0; i < len; i++)
+		rand_num += argv[1][i];
+	srand((unsigned int)(f5(argv[1], len) ^ f6(argv[1], len)));
+	password[4] = f6(argv[1], len);
+	password[5] = '\0';
 	printf("%s", password);
 	return (0);
 }
