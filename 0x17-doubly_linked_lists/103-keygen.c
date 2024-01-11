@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <time.h>
 
-
 /**
  * f4 - generates random valid passwords for the
  *      program 103-keygen.c
@@ -34,7 +33,6 @@ int f4(char *usrn, int len)
  * @len: length of the login
  * Return: pointer to the generated password
  */
-
 int f5(char *usrn, int len)
 {
 	int ch;
@@ -59,7 +57,6 @@ int f5(char *usrn, int len)
  * @len: length of the login
  * Return: pointer to the generated password
  */
-
 int f6(char *usrn, int len)
 {
 	int ch;
@@ -76,6 +73,7 @@ int f6(char *usrn, int len)
 	return (rand());
 }
 
+
 /**
  * main - Entry point, generates passwords
  * @argc: argument count
@@ -84,28 +82,45 @@ int f6(char *usrn, int len)
  */
 int main(int argc, char **argv)
 {
-	char password[84];
-	int rand_num;
-	int len;
-	int i;
+	char keygen[7];
+	int login_len, ch, vch;
+	long alph[] = {
+		0x3877445248432d41, 0x42394530534e6c37, 0x4d6e706762695432,
+		0x74767a5835737956, 0x2b554c59634a474f, 0x71786636576a6d34,
+		0x723161513346655a, 0x6b756f494b646850 };
+	(void) argc;
 
-	if (argc != 2)
-		return (-1);
-	for (len = 0; argv[1][len]; len++)
+	for (login_len = 0; argv[1][login_len]; login_len++)
 		;
-	srand(f4(argv[1], len));
-	password[0] = f1(argv[1], len);
-	srand(f2(argv[1], len));
-	password[1] = f2(argv[1], len);
-	srand(f3(argv[1]));
-	password[2] = f3(argv[1]);
-	rand_num = f4(argv[1], len);
-	password[3] = rand_num & 0x3f;
-	for (i = 0, rand_num = 0; i < len; i++)
-		rand_num += argv[1][i];
-	srand((unsigned int)(f5(argv[1], len) ^ f6(argv[1], len)));
-	password[4] = f6(argv[1], len);
-	password[5] = '\0';
-	printf("%s", password);
+
+	keygen[0] = ((char *)alph)[(login_len ^ 59) & 63];
+
+	ch = vch = 0;
+	while (vch < login_len)
+	{
+		ch = ch + argv[1][vch];
+		vch = vch + 1;
+	}
+	keygen[1] = ((char *)alph)[(ch ^ 79) & 63];
+
+	ch = 1;
+	vch = 0;
+	while (vch < login_len)
+	{
+		ch = argv[1][vch] * ch;
+		vch = vch + 1;
+	}
+	keygen[2] = ((char *)alph)[(ch ^ 85) & 63];
+
+	keygen[3] = ((char *)alph)[f4(argv[1], login_len)];
+
+	keygen[4] = ((char *)alph)[f5(argv[1], login_len)];
+
+	keygen[5] = ((char *)alph)[f6(argv[1], login_len)];
+	keygen[6] = '\0';
+
+	for (ch = 0; keygen[ch]; ch++)
+		printf("%c", keygen[ch]);
+
 	return (0);
 }
